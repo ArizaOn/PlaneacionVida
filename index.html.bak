@@ -257,15 +257,6 @@
   }
   .thumb{width:36px;height:36px;object-fit:cover;border-radius:6px;cursor:pointer;}
 
-  /* MAP TOGGLE BUTTON */
-  .map-toggle-btn{
-    width:38px;height:38px;border-radius:8px;border:1px solid var(--border);
-    background:var(--panel-2);font-size:17px;cursor:pointer;display:flex;
-    align-items:center;justify-content:center;flex:none;transition:border-color .15s, background .15s;
-  }
-  .map-toggle-btn:hover{border-color:var(--accent);}
-  .map-toggle-btn.active{background:var(--panel-3);border-color:var(--accent);}
-
   /* PHOTO EVIDENCE */
   .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:12px;}
   .photo-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
@@ -1032,8 +1023,6 @@ function renderMathTree(){
       </div>`;
   }).join('');
 }
-let mathTreeOpen = false;
-function toggleMathTree(){ mathTreeOpen = !mathTreeOpen; renderPillar('math'); }
 function renderMathBody(){
   const accent = PILLARS.math.accent;
   const dates = Object.keys(DATA.math.logs).sort().reverse();
@@ -1051,11 +1040,10 @@ function renderMathBody(){
   }).join('');
 
   return `
-    <div class="toolbar">
-      <div class="section-title" style="margin:0">Mapa de temario</div>
-      <button class="map-toggle-btn ${mathTreeOpen?'active':''}" style="--accent:${accent}" onclick="toggleMathTree()" title="Mostrar/ocultar mapa de temario">🗺️</button>
+    <div class="section-title">Mapa de temario</div>
+    <div class="card">
+      ${renderMathTree()}
     </div>
-    ${mathTreeOpen ? `<div class="card" style="margin-bottom:20px">${renderMathTree()}</div>` : ''}
 
     <div class="section-title">Registrar sesión</div>
     <div class="card" style="--accent:${accent}">

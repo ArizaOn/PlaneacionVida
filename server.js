@@ -20,7 +20,7 @@ const PHOTOS_DIR = path.join(ROOT, 'fotos');
 const PORT = 4173;
 
 const DEFAULT_ROUTINES = {
-  'Torso': [
+  'Torso': { type:'fuerza', exercises: [
     {name:'Press de banca con barra', sets:4, reps:8, weight:''},
     {name:'Remo con barra', sets:4, reps:8, weight:''},
     {name:'Press militar con barra', sets:3, reps:8, weight:''},
@@ -28,8 +28,8 @@ const DEFAULT_ROUTINES = {
     {name:'Remo unilateral a una mano con mancuerna', sets:3, reps:10, weight:''},
     {name:'Elevaciones laterales', sets:3, reps:12, weight:''},
     {name:'Extensión de codo en polea', sets:3, reps:12, weight:''}
-  ],
-  'Piernas': [
+  ]},
+  'Piernas': { type:'fuerza', exercises: [
     {name:'Sentadillas con barra alta', sets:4, reps:8, weight:''},
     {name:'Peso muerto con barra', sets:3, reps:6, weight:''},
     {name:'Prensa para piernas', sets:3, reps:12, weight:''},
@@ -37,21 +37,22 @@ const DEFAULT_ROUTINES = {
     {name:'Aducciones en máquina', sets:3, reps:15, weight:''},
     {name:'Elevación de talones (Gemelos)', sets:4, reps:15, weight:''},
     {name:'Plancha con desplazamiento', sets:3, reps:10, weight:''}
-  ],
-  'Cuerpo Completo': [
+  ]},
+  'Cuerpo Completo': { type:'fuerza', exercises: [
     {name:'Press de banca y sentadillas (variantes con mancuernas)', sets:3, reps:10, weight:''},
     {name:'Tracción vertical', sets:3, reps:10, weight:''},
     {name:'Curl de bíceps en banco inclinado', sets:3, reps:12, weight:''},
     {name:'Face pull', sets:3, reps:15, weight:''}
-  ]
+  ]},
+  'Natación': { type:'tiempo', exercises: [] }
 };
 
 function defaultData(){
   return {
     daily:{}, gym:{}, gymRoutines: DEFAULT_ROUTINES,
-    math:{}, toefl:{settings:{target:'',examDate:''}, tests:[]},
-    cyber:{settings:{certName:'',examDate:''}, logs:[]},
-    indep:{months:{}}, photos:{gym:[], indep:[]}
+    math:{ logs:{}, progress:{} }, toefl:{settings:{target:'',examDate:''}, tests:[]},
+    cyber:{certs:[], logs:[]},
+    indep:{activities:[]}, photos:{gym:[], indep:[]}
   };
 }
 
