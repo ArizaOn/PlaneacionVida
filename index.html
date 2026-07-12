@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitácora — Año Sabático</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14171b;
+    --panel:#1b1f26;
+    --panel-2:#20252e;
+    --panel-3:#262c37;
+    --border:#2b313c;
+    --text:#edeae1;
+    --text-dim:#9198a6;
+    --text-faint:#5b6270;
+
+    --gym:#e15a3e;
+    --math:#4fa875;
+    --toefl:#4a90d9;
+    --cyber:#b47ee5;
+    --indep:#e0b23d;
+
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* HEADER */
+  header.top{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:1px solid var(--border);
+    padding-bottom:18px;margin-bottom:20px;
+    flex-wrap:wrap;gap:14px;
+  }
+  .brand{display:flex;flex-direction:column;gap:2px;}
+  .brand .eyebrow{
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;
+    color:var(--text-faint);text-transform:uppercase;
+  }
+  .brand h1{
+    font-family:var(--font-display);font-size:26px;font-weight:700;margin:0;
+    letter-spacing:-.01em;
+  }
+  .today-chip{
+    font-family:var(--font-mono);font-size:12px;color:var(--text-dim);
+    border:1px solid var(--border);padding:6px 10px;border-radius:6px;
+    background:var(--panel);white-space:nowrap;
+  }
+
+  /* NAV */
+  nav.tabs{
+    display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;
+  }
+  .tab{
+    font-family:var(--font-body);font-weight:600;font-size:13px;
+    padding:9px 14px;border-radius:8px;border:1px solid var(--border);
+    background:var(--panel);color:var(--text-dim);cursor:pointer;
+    display:flex;align-items:center;gap:7px;transition:border-color .15s, color .15s;
+  }
+  .tab:hover{color:var(--text);}
+  .tab .dot{width:8px;height:8px;border-radius:50%;flex:none;}
+  .tab.active{color:var(--text);border-color:var(--accent);background:var(--panel-2);}
+
+  /* CARDS / GENERIC */
+  .card{
+    background:var(--panel);border:1px solid var(--border);border-radius:12px;
+    padding:18px 20px;
+  }
+  .grid{display:grid;gap:14px;}
+  .btn{
+    font-family:var(--font-body);font-weight:600;font-size:13px;
+    background:var(--accent, var(--panel-3));color:var(--ink);
+    border:none;padding:9px 14px;border-radius:7px;cursor:pointer;
+  }
+  .btn.secondary{background:transparent;color:var(--text-dim);border:1px solid var(--border);}
+  .btn:active{transform:translateY(1px);}
+  input,select,textarea{
+    font-family:var(--font-body);font-size:13px;color:var(--text);
+    background:var(--panel-2);border:1px solid var(--border);border-radius:6px;
+    padding:8px 10px;width:100%;
+  }
+  input:focus,select:focus,textarea:focus{outline:1px solid var(--accent, #666);}
+  label{font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.04em;}
+  .field{margin-bottom:10px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{
+    text-align:left;font-family:var(--font-mono);font-size:10px;color:var(--text-faint);
+    text-transform:uppercase;letter-spacing:.06em;font-weight:500;
+    padding:6px 8px;border-bottom:1px solid var(--border);
+  }
+  td{padding:8px;border-bottom:1px solid var(--border);color:var(--text-dim);vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  .empty{color:var(--text-faint);font-size:13px;font-style:italic;padding:14px 4px;}
+
+  /* HOME: MAPA */
+  .home-grid{display:grid;grid-template-columns:340px 1fr;gap:18px;}
+  @media(max-width:760px){.home-grid{grid-template-columns:1fr;}}
+
+  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .cal-head .m-label{font-family:var(--font-display);font-weight:700;font-size:15px;}
+  .cal-nav{display:flex;gap:4px;}
+  .cal-nav button{
+    background:var(--panel-2);border:1px solid var(--border);color:var(--text-dim);
+    width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:13px;
+  }
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+  .cal-dow{font-family:var(--font-mono);font-size:9px;color:var(--text-faint);text-align:center;padding-bottom:4px;text-transform:uppercase;}
+  .cal-cell{
+    aspect-ratio:1/1;border-radius:7px;border:1px solid var(--border);
+    background:var(--panel-2);cursor:pointer;position:relative;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    font-size:11px;color:var(--text-dim);
+  }
+  .cal-cell.muted{opacity:.28;pointer-events:none;}
+  .cal-cell.today{border-color:var(--text-dim);}
+  .cal-cell.selected{border-color:var(--indep);box-shadow:0 0 0 1px var(--indep) inset;}
+  .cal-dots{display:flex;gap:2px;flex-wrap:wrap;justify-content:center;max-width:26px;}
+  .cal-dots span{width:4.5px;height:4.5px;border-radius:50%;}
+
+  .day-panel{margin-top:14px;}
+  .day-panel h3{font-family:var(--font-display);font-size:14px;margin:0 0 10px;}
+  .check-list{display:flex;flex-direction:column;gap:8px;}
+  .check-row{
+    display:flex;align-items:center;gap:10px;padding:8px 10px;
+    border:1px solid var(--border);border-radius:8px;background:var(--panel-2);cursor:pointer;
+  }
+  .check-row input{width:16px;height:16px;accent-color:var(--row-accent);flex:none;}
+  .check-row span{font-size:13px;flex:1;}
+  .check-row .dotmark{width:9px;height:9px;border-radius:50%;background:var(--row-accent);flex:none;}
+
+  /* PILLAR CARDS */
+  .pillar-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:520px){.pillar-cards{grid-template-columns:1fr;}}
+  .pcard{
+    background:var(--panel);border:1px solid var(--border);border-radius:12px;
+    padding:16px;cursor:pointer;transition:border-color .15s;
+    border-left:3px solid var(--accent);
+  }
+  .pcard:hover{border-color:var(--accent);}
+  .pcard .ptitle{font-family:var(--font-display);font-weight:700;font-size:15px;margin-bottom:4px;}
+  .pcard .pstd{font-size:12px;color:var(--text-dim);line-height:1.5;margin-bottom:10px;}
+  .pcard .pstats{display:flex;gap:14px;font-family:var(--font-mono);}
+  .pcard .pstats b{display:block;font-size:16px;color:var(--text);}
+  .pcard .pstats small{color:var(--text-faint);font-size:10px;text-transform:uppercase;}
+
+  /* PILLAR DETAIL */
+  .pillar-header{border-left:3px solid var(--accent);padding-left:16px;margin-bottom:20px;}
+  .pillar-header .peyebrow{font-family:var(--font-mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;}
+  .pillar-header h2{font-family:var(--font-display);font-size:22px;margin:2px 0 12px;}
+  .semt{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  @media(max-width:700px){.semt{grid-template-columns:1fr 1fr;}}
+  .semt .cell{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+  .semt .cell .k{font-family:var(--font-mono);font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+  .semt .cell .v{font-size:12.5px;color:var(--text-dim);line-height:1.45;}
+
+  .section-title{font-family:var(--font-display);font-weight:700;font-size:14px;margin:26px 0 10px;color:var(--text);}
+  .stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+  .stat-chip{
+    background:var(--panel-2);border:1px solid var(--border);border-radius:8px;
+    padding:10px 14px;min-width:110px;
+  }
+  .stat-chip .n{font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--accent);}
+  .stat-chip .l{font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;font-family:var(--font-mono);}
+
+  .exrow{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:6px;margin-bottom:6px;align-items:end;}
+  @media(max-width:600px){.exrow{grid-template-columns:1fr 1fr;}}
+  .exrow .rm{background:transparent;border:1px solid var(--border);color:var(--text-faint);border-radius:6px;cursor:pointer;height:34px;}
+
+  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;flex-wrap:wrap;}
+  .backlink{font-family:var(--font-mono);font-size:12px;color:var(--text-dim);cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+  .backlink:hover{color:var(--text);}
+
+  .spark{display:block;}
+  .footer-note{margin-top:40px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .footer-note p{font-size:11px;color:var(--text-faint);font-family:var(--font-mono);max-width:520px;line-height:1.6;margin:0;}
+
+  /* PROGRESS CHART (HOME) */
+  .pbar{margin-bottom:12px;}
+  .pbar:last-child{margin-bottom:0;}
+  .pbar-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;}
+  .pbar-label span:first-child{font-weight:600;}
+  .pbar-label span:last-child{font-family:var(--font-mono);color:var(--text-faint);font-size:11px;}
+  .pbar-track{height:8px;border-radius:5px;background:var(--panel-2);border:1px solid var(--border);overflow:hidden;}
+  .pbar-fill{height:100%;border-radius:5px;transition:width .2s;}
+
+  /* GYM: QUICK LOG CARDS */
+  .exquick{
+    background:var(--panel-2);border:1px solid var(--border);border-radius:9px;
+    padding:10px 12px;margin-bottom:8px;
+  }
+  .exqhead{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
+  .exqname{font-weight:600;font-family:var(--font-body);}
+  .exqsteppers{display:flex;gap:16px;flex-wrap:wrap;}
+  .stepper label{margin-bottom:5px;}
+  .strow{display:flex;align-items:center;gap:8px;}
+  .strow button{
+    width:32px;height:32px;border-radius:7px;border:1px solid var(--border);
+    background:var(--panel-3);color:var(--text);font-size:16px;cursor:pointer;line-height:1;
+  }
+  .strow span{font-family:var(--font-mono);font-size:14px;min-width:34px;text-align:center;}
+
+  /* GYM: ROUTINE EDITOR */
+  .routine-block{border-bottom:1px solid var(--border);padding:12px 0;}
+  .routine-block:last-of-type{border-bottom:none;}
+  .routine-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;font-size:12px;
+    background:var(--panel-3);border:1px solid var(--border);border-radius:20px;padding:5px 6px 5px 12px;
+  }
+  .chip button{background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:13px;}
+  .chip-add{display:flex;gap:8px;}
+  .chip-add input{flex:1;}
+
+  /* PHOTO EVIDENCE */
+  .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:12px;}
+  .photo-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+  .photo-card img{width:100%;height:120px;object-fit:cover;cursor:pointer;display:block;}
+  .photo-meta{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;font-family:var(--font-mono);font-size:10px;color:var(--text-faint);}
+  .photo-meta button{background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:12px;}
+  .photo-note{padding:0 8px 8px;font-size:11px;color:var(--text-dim);line-height:1.4;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <span class="eyebrow">Bitácora de auditoría personal</span>
+      <h1>Año sabático — control de estándares</h1>
+    </div>
+    <div class="today-chip" id="todayChip"></div>
+  </header>
+
+  <nav class="tabs" id="tabs"></nav>
+  <main id="view"></main>
+
+  <div class="footer-note">
+    <p>Estándar → Métrica → Evidencia → Consecuencia. Los datos viven en <code>bitacora-db.json</code> junto a este archivo, y las fotos en la carpeta <code>/fotos</code> — detectados automáticamente por el servidor local. Nada sale de tu compu.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn secondary" onclick="downloadBackup()">Descargar copia</button>
+      <button class="btn secondary" id="resetBtn">Reiniciar todos los datos</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ CONFIG: PILARES ============ */
+const PILLARS = {
+  gym: {
+    key:'gym', label:'Gym', accent:'var(--gym)', accentVar:'--gym',
+    estandar:'Entrenar 5 días/semana, 45–60 min, con progresión de carga mensual.',
+    metrica:'Sesiones completadas/semana + kg totales movidos (sets × reps × peso).',
+    evidencia:'Registro de ejercicios y peso cargado por sesión.',
+    consecuencia:'Si caes a ≤3 sesiones en la semana: sin gasto discrecional hasta recuperar el ritmo.'
+  },
+  math: {
+    key:'math', label:'Matemáticas', accent:'var(--math)', accentVar:'--math',
+    estandar:'6 horas/semana, avanzar un módulo definido del temario cada 2 semanas.',
+    metrica:'% del temario cubierto + nota en examen de práctica del módulo.',
+    evidencia:'Ejercicios resueltos guardados + resultado del examen de práctica.',
+    consecuencia:'Si el examen de práctica sale <80%, repites el módulo antes de avanzar.'
+  },
+  toefl: {
+    key:'toefl', label:'TOEFL', accent:'var(--toefl)', accentVar:'--toefl',
+    estandar:'Puntaje objetivo definido para la fecha de examen fijada con anticipación.',
+    metrica:'Score en practice tests (por sección o examen completo).',
+    evidencia:'Reporte de resultados guardado por intento.',
+    consecuencia:'Si 2 meses seguidos el score no sube, se cambia el método de estudio.'
+  },
+  cyber: {
+    key:'cyber', label:'Ciberseguridad', accent:'var(--cyber)', accentVar:'--cyber',
+    estandar:'Certificación específica con fecha de examen agendada.',
+    metrica:'% del temario cubierto + score en exámenes de práctica.',
+    evidencia:'Notas de laboratorio + certificado final.',
+    consecuencia:'Si a mitad de trimestre vas <50% del temario, se recorta otro pilar (nunca gym).'
+  },
+  indep: {
+    key:'indep', label:'Independencia', accent:'var(--indep)', accentVar:'--indep',
+    estandar:'Dominar una habilidad nueva de vida independiente cada mes (cocina, presupuesto, hogar, trámites).',
+    metrica:'Número de habilidades dominadas de forma autónoma al mes.',
+    evidencia:'Registro de lo practicado (ej. platillos que ya sabes cocinar, presupuesto armado por ti).',
+    consecuencia:'Si un mes no se cubre, se repite el mes siguiente antes de avanzar a la próxima.'
+  }
+};
+const PILLAR_ORDER = ['gym','math','toefl','cyber','indep'];
+
+/* ============ STATE ============ */
+let DATA = {
+  daily: {},                 // {'YYYY-MM-DD': {gym,math,toefl,cyber,indep: bool}}
+  gym: {},                   // {'YYYY-MM-DD': {split, exercises:[{name,sets,reps,weight}], notes}}
+  gymRoutines: {},           // {'Pecho': [{name,sets,reps,weight}], 'Pierna': [...], ...}
+  math: {},                  // {'YYYY-MM-DD': {topic,exercisesSolved,exercisesCorrect,minutes,examScore,notes}}
+  toefl: { settings:{target:'', examDate:''}, tests:[] },
+  cyber: { settings:{certName:'', examDate:''}, logs:[] },
+  indep: { months:{} },       // {'YYYY-MM': {skill, mastered, notes}}
+  photos: { gym:[], indep:[] } // {gym:[{id,date,note,img}], indep:[...]}
+};
+const DEFAULT_ROUTINES = {
+  'Torso': [
+    {name:'Press de banca con barra', sets:4, reps:8, weight:''},
+    {name:'Remo con barra', sets:4, reps:8, weight:''},
+    {name:'Press militar con barra', sets:3, reps:8, weight:''},
+    {name:'Press inclinado con mancuernas', sets:3, reps:10, weight:''},
+    {name:'Remo unilateral a una mano con mancuerna', sets:3, reps:10, weight:''},
+    {name:'Elevaciones laterales', sets:3, reps:12, weight:''},
+    {name:'Extensión de codo en polea', sets:3, reps:12, weight:''}
+  ],
+  'Piernas': [
+    {name:'Sentadillas con barra alta', sets:4, reps:8, weight:''},
+    {name:'Peso muerto con barra', sets:3, reps:6, weight:''},
+    {name:'Prensa para piernas', sets:3, reps:12, weight:''},
+    {name:'Curl de isquios en máquina', sets:3, reps:12, weight:''},
+    {name:'Aducciones en máquina', sets:3, reps:15, weight:''},
+    {name:'Elevación de talones (Gemelos)', sets:4, reps:15, weight:''},
+    {name:'Plancha con desplazamiento', sets:3, reps:10, weight:''}
+  ],
+  'Cuerpo Completo': [
+    {name:'Press de banca y sentadillas (variantes con mancuernas)', sets:3, reps:10, weight:''},
+    {name:'Tracción vertical', sets:3, reps:10, weight:''},
+    {name:'Curl de bíceps en banco inclinado', sets:3, reps:12, weight:''},
+    {name:'Face pull', sets:3, reps:15, weight:''}
+  ]
+};
+let currentView = 'home';
+let calYear, calMonth; // 0-indexed month
+let selectedDay = todayStr();
+
+function todayStr(){
+  const d = new Date();
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+}
+function pad(n){return String(n).padStart(2,'0');}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+
+/* ============ STORAGE (servidor local — detecta el .json automáticamente) ============ */
+function defaultData(){
+  return {
+    daily:{}, gym:{}, gymRoutines: {},
+    math:{}, toefl:{settings:{target:'',examDate:''}, tests:[]},
+    cyber:{settings:{certName:'',examDate:''}, logs:[]},
+    indep:{months:{}}, photos:{gym:[], indep:[]}
+  };
+}
+function mergeWithDefaults(loaded){
+  const base = defaultData();
+  loaded = loaded || {};
+  return {
+    daily: loaded.daily || base.daily,
+    gym: loaded.gym || base.gym,
+    gymRoutines: (loaded.gymRoutines && Object.keys(loaded.gymRoutines).length) ? loaded.gymRoutines : base.gymRoutines,
+    math: loaded.math || base.math,
+    toefl: loaded.toefl || base.toefl,
+    cyber: loaded.cyber || base.cyber,
+    indep: loaded.indep || base.indep,
+    photos: loaded.photos || base.photos
+  };
+}
+async function loadFromServer(){
+  const res = await fetch('/api/data');
+  if(!res.ok) throw new Error('server not ok');
+  DATA = mergeWithDefaults(await res.json());
+  if(Object.keys(DATA.gymRoutines).length === 0){
+    DATA.gymRoutines = JSON.parse(JSON.stringify(DEFAULT_ROUTINES));
+    await save();
+  }
+}
+async function save(){
+  try{
+    await fetch('/api/data', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(DATA) });
+  }catch(e){
+    console.error('Error guardando', e);
+  }
+}
+function downloadBackup(){
+  const blob = new Blob([JSON.stringify(DATA, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'bitacora-sabatico-respaldo.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+function boot(){
+  const now = new Date();
+  calYear = now.getFullYear();
+  calMonth = now.getMonth();
+  currentView = 'home';
+  renderAll();
+}
+
+/* ============ NAV ============ */
+function renderTabs(){
+  const tabs = document.getElementById('tabs');
+  let html = `<button class="tab ${currentView==='home'?'active':''}" style="--accent:var(--indep)" onclick="goHome()">
+      <span class="dot" style="background:var(--text-dim)"></span> Mapa
+    </button>`;
+  PILLAR_ORDER.forEach(k=>{
+    const p = PILLARS[k];
+    html += `<button class="tab ${currentView===k?'active':''}" style="--accent:${p.accent}" onclick="goPillar('${k}')">
+      <span class="dot" style="background:${p.accent}"></span> ${p.label}
+    </button>`;
+  });
+  tabs.innerHTML = html;
+}
+function goHome(){ currentView='home'; renderAll(); }
+function goPillar(k){ currentView=k; renderAll(); }
+function renderAll(){
+  renderTabs();
+  if(currentView==='home') renderHome();
+  else renderPillar(currentView);
+}
+
+/* ============ HOME / MAPA ============ */
+function statsFor(dateStr){
+  return DATA.daily[dateStr] || {gym:false,math:false,toefl:false,cyber:false,indep:false};
+}
+async function toggleDaily(dateStr, key){
+  if(!DATA.daily[dateStr]) DATA.daily[dateStr] = {gym:false,math:false,toefl:false,cyber:false,indep:false};
+  DATA.daily[dateStr][key] = !DATA.daily[dateStr][key];
+  await save();
+  renderHome();
+}
+function renderCalendar(){
+  const first = new Date(calYear, calMonth, 1);
+  let startWeekday = first.getDay(); // 0 = Sunday
+  startWeekday = (startWeekday + 6) % 7; // convert to Monday-first
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const dows = ['L','M','X','J','V','S','D'];
+
+  let cells = '';
+  for(let i=0;i<startWeekday;i++) cells += `<div class="cal-cell muted"></div>`;
+  for(let d=1; d<=daysInMonth; d++){
+    const dateStr = calYear+'-'+pad(calMonth+1)+'-'+pad(d);
+    const s = statsFor(dateStr);
+    const dots = PILLAR_ORDER.filter(k=>s[k]).map(k=>`<span style="background:${PILLARS[k].accent}"></span>`).join('');
+    const isToday = dateStr === todayStr();
+    const isSel = dateStr === selectedDay;
+    cells += `<div class="cal-cell ${isToday?'today':''} ${isSel?'selected':''}" onclick="selectDay('${dateStr}')">
+      <div>${d}</div>
+      <div class="cal-dots">${dots}</div>
+    </div>`;
+  }
+
+  return `
+    <div class="cal-head">
+      <button class="cal-nav" onclick="shiftMonth(-1)" style="margin-right:4px;">‹</button>
+      <span class="m-label">${monthNames[calMonth]} ${calYear}</span>
+      <button class="cal-nav" onclick="shiftMonth(1)">›</button>
+    </div>
+    <div class="cal-grid">
+      ${dows.map(x=>`<div class="cal-dow">${x}</div>`).join('')}
+      ${cells}
+    </div>`;
+}
+function shiftMonth(delta){
+  calMonth += delta;
+  if(calMonth<0){calMonth=11;calYear--;}
+  if(calMonth>11){calMonth=0;calYear++;}
+  renderHome();
+}
+function selectDay(dateStr){
+  selectedDay = dateStr;
+  renderHome();
+}
+function pillarQuickStats(k){
+  const today = new Date();
+  const weekAgo = new Date(); weekAgo.setDate(today.getDate()-6);
+  if(k==='gym'){
+    let sessions=0, volume=0;
+    Object.keys(DATA.gym).forEach(d=>{
+      const dt = new Date(d);
+      if(dt>=weekAgo && dt<=today){
+        sessions++;
+        (DATA.gym[d].exercises||[]).forEach(e=>{ volume += (Number(e.sets)||0)*(Number(e.reps)||0)*(Number(e.weight)||0); });
+      }
+    });
+    return `<b>${sessions}/5</b><small>sesiones semana</small></div><div><b>${volume.toLocaleString()}</b><small>kg movidos</small>`;
+  }
+  if(k==='math'){
+    let hrs=0, count=0;
+    Object.keys(DATA.math).forEach(d=>{
+      const dt = new Date(d);
+      if(dt>=weekAgo && dt<=today){ hrs += (Number(DATA.math[d].minutes)||0)/60; count++; }
+    });
+    return `<b>${hrs.toFixed(1)}h</b><small>horas semana</small></div><div><b>${count}</b><small>sesiones</small>`;
+  }
+  if(k==='toefl'){
+    const tests = DATA.toefl.tests||[];
+    const last = tests[tests.length-1];
+    return `<b>${last?last.score:'—'}</b><small>último score</small></div><div><b>${DATA.toefl.settings.target||'—'}</b><small>meta</small>`;
+  }
+  if(k==='cyber'){
+    const logs = DATA.cyber.logs||[];
+    const withPct = logs.filter(l=>l.temarioPercent!=='' && l.temarioPercent!=null);
+    const pct = withPct.length? withPct[withPct.length-1].temarioPercent : 0;
+    return `<b>${pct}%</b><small>temario</small></div><div><b>${logs.length}</b><small>registros</small>`;
+  }
+  if(k==='indep'){
+    const months = DATA.indep.months||{};
+    const mastered = Object.values(months).filter(m=>m.mastered).length;
+    const total = Object.keys(months).length;
+    return `<b>${mastered}</b><small>dominadas</small></div><div><b>${total}</b><small>meses activos</small>`;
+  }
+  return '';
+}
+function monthProgress(){
+  const now = new Date();
+  const year = now.getFullYear(), month = now.getMonth();
+  const daysElapsed = now.getDate();
+  const counts = {gym:0,math:0,toefl:0,cyber:0,indep:0};
+  for(let d=1; d<=daysElapsed; d++){
+    const ds = year+'-'+pad(month+1)+'-'+pad(d);
+    const s = DATA.daily[ds];
+    if(s) PILLAR_ORDER.forEach(k=>{ if(s[k]) counts[k]++; });
+  }
+  return {counts, daysElapsed};
+}
+function renderProgressChart(){
+  const {counts, daysElapsed} = monthProgress();
+  const bars = PILLAR_ORDER.map(k=>{
+    const p = PILLARS[k];
+    const pct = daysElapsed? Math.round((counts[k]/daysElapsed)*100) : 0;
+    return `<div class="pbar">
+      <div class="pbar-label"><span>${p.label}</span><span>${counts[k]}/${daysElapsed} días · ${pct}%</span></div>
+      <div class="pbar-track"><div class="pbar-fill" style="width:${pct}%;background:${p.accent}"></div></div>
+    </div>`;
+  }).join('');
+  return `<div class="card" style="margin-bottom:18px">
+    <div class="section-title" style="margin-top:0">Progreso del mes — cumplimiento diario</div>
+    ${bars}
+  </div>`;
+}
+function renderHome(){
+  const s = statsFor(selectedDay);
+  const checklistHtml = PILLAR_ORDER.map(k=>{
+    const p = PILLARS[k];
+    return `<label class="check-row" style="--row-accent:${p.accent}">
+      <input type="checkbox" ${s[k]?'checked':''} onchange="toggleDaily('${selectedDay}','${k}')">
+      <span class="dotmark"></span>
+      <span>${p.label}</span>
+    </label>`;
+  }).join('');
+
+  const pillarCardsHtml = PILLAR_ORDER.map(k=>{
+    const p = PILLARS[k];
+    return `<div class="pcard" style="--accent:${p.accent}" onclick="goPillar('${k}')">
+      <div class="ptitle">${p.label}</div>
+      <div class="pstd">${p.estandar}</div>
+      <div class="pstats"><div>${pillarQuickStats(k)}</div></div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('view').innerHTML = `
+    ${renderProgressChart()}
+    <div class="home-grid">
+      <div class="card">
+        ${renderCalendar()}
+        <div class="day-panel">
+          <h3>Checklist del ${selectedDay}</h3>
+          <div class="check-list">${checklistHtml}</div>
+        </div>
+      </div>
+      <div>
+        <div class="section-title" style="margin-top:0">Pilares</div>
+        <div class="pillar-cards">${pillarCardsHtml}</div>
+      </div>
+    </div>
+  `;
+}
+
+/* ============ PILLAR DETAIL DISPATCH ============ */
+function renderPillar(k){
+  const p = PILLARS[k];
+  const header = `
+    <div class="toolbar">
+      <span class="backlink" onclick="goHome()">← Volver al mapa</span>
+    </div>
+    <div class="pillar-header" style="--accent:${p.accent}">
+      <div class="peyebrow">Pilar</div>
+      <h2>${p.label}</h2>
+      <div class="semt">
+        <div class="cell"><div class="k">Estándar</div><div class="v">${p.estandar}</div></div>
+        <div class="cell"><div class="k">Métrica</div><div class="v">${p.metrica}</div></div>
+        <div class="cell"><div class="k">Evidencia</div><div class="v">${p.evidencia}</div></div>
+        <div class="cell"><div class="k">Consecuencia</div><div class="v">${p.consecuencia}</div></div>
+      </div>
+    </div>
+  `;
+  const bodyFns = {gym:renderGymBody, math:renderMathBody, toefl:renderToeflBody, cyber:renderCyberBody, indep:renderIndepBody};
+  document.getElementById('view').innerHTML = header + bodyFns[k]();
+}
+
+/* ============ GYM ============ */
+let gymFormExercises = [];
+let gymSelectedSplit = '';
+let gymEditingRoutines = false;
+
+function getLastExerciseValue(name, field){
+  const dates = Object.keys(DATA.gym).sort().reverse();
+  for(const d of dates){
+    const ex = (DATA.gym[d].exercises||[]).find(e=>e.name===name);
+    if(ex && ex[field]!=='' && ex[field]!=null) return ex[field];
+  }
+  return '';
+}
+function loadSplitIntoForm(split){
+  gymSelectedSplit = split;
+  const routine = DATA.gymRoutines[split] || [];
+  gymFormExercises = routine.map(r=>({
+    name: r.name,
+    sets: getLastExerciseValue(r.name,'sets') || r.sets || '',
+    reps: getLastExerciseValue(r.name,'reps') || r.reps || '',
+    weight: getLastExerciseValue(r.name,'weight') || r.weight || ''
+  }));
+  if(gymFormExercises.length===0) gymFormExercises = [{name:'',sets:'',reps:'',weight:''}];
+  renderPillar('gym');
+}
+function adjExVal(i, field, delta){
+  const cur = Number(gymFormExercises[i][field]) || 0;
+  let next = cur + delta;
+  if(next<0) next = 0;
+  gymFormExercises[i][field] = (Math.round(next*10)/10);
+  renderPillar('gym');
+}
+function stepperHtml(label, value, i, field, step){
+  return `<div class="stepper">
+    <label>${label}</label>
+    <div class="strow">
+      <button type="button" onclick="adjExVal(${i},'${field}',-${step})">−</button>
+      <span>${value===''||value==null?'—':value}</span>
+      <button type="button" onclick="adjExVal(${i},'${field}',${step})">+</button>
+    </div>
+  </div>`;
+}
+function weeklyVolumeSeries(){
+  const weeks = [];
+  const now = new Date();
+  for(let w=7; w>=0; w--){
+    const end = new Date(now); end.setDate(now.getDate()-w*7);
+    const start = new Date(end); start.setDate(end.getDate()-6);
+    let vol = 0;
+    Object.keys(DATA.gym).forEach(d=>{
+      const dt = new Date(d);
+      if(dt>=start && dt<=end){
+        (DATA.gym[d].exercises||[]).forEach(e=>{ vol += (Number(e.sets)||0)*(Number(e.reps)||0)*(Number(e.weight)||0); });
+      }
+    });
+    weeks.push(vol);
+  }
+  return weeks;
+}
+function renderGymBody(){
+  const accent = PILLARS.gym.accent;
+  const dates = Object.keys(DATA.gym).sort().reverse();
+  const rows = dates.map(d=>{
+    const entry = DATA.gym[d];
+    const exList = (entry.exercises||[]).map(e=>`${e.name}: ${e.sets}×${e.reps} @ ${e.weight}kg`).join(' · ');
+    return `<tr>
+      <td style="font-family:var(--font-mono);white-space:nowrap">${d}</td>
+      <td>${entry.split||'—'}</td>
+      <td>${exList || '—'}</td>
+      <td>${entry.notes||''}</td>
+      <td><button class="btn secondary" onclick="deleteEntry('gym','${d}')">Borrar</button></td>
+    </tr>`;
+  }).join('');
+
+  const splitOptions = Object.keys(DATA.gymRoutines).map(s=>
+    `<option value="${s}" ${s===gymSelectedSplit?'selected':''}>${s}</option>`
+  ).join('');
+
+  const exCards = gymFormExercises.map((e,i)=>`
+    <div class="exquick">
+      <div class="exqhead">
+        <input class="exqname" value="${e.name}" oninput="gymFormExercises[${i}].name=this.value" placeholder="Nombre del ejercicio">
+        <button class="rm" onclick="removeGymExRow(${i})">✕</button>
+      </div>
+      <div class="exqsteppers">
+        ${stepperHtml('Series', e.sets, i, 'sets', 1)}
+        ${stepperHtml('Reps', e.reps, i, 'reps', 1)}
+        ${stepperHtml('Peso (kg)', e.weight, i, 'weight', 2.5)}
+      </div>
+    </div>
+  `).join('') || `<div class="empty">Elige un día/rutina arriba, o agrega un ejercicio suelto.</div>`;
+
+  const routineEditor = !gymEditingRoutines ? '' : `
+    <div class="card" style="margin-top:10px">
+      ${Object.keys(DATA.gymRoutines).map(split=>`
+        <div class="routine-block">
+          <div class="routine-head">
+            <b>${split}</b>
+            <button class="btn secondary" onclick="deleteRoutineSplit('${split}')">Borrar rutina</button>
+          </div>
+          <div class="chip-row">
+            ${DATA.gymRoutines[split].map((ex,idx)=>`<span class="chip">${ex.name}<button onclick="removeRoutineExercise('${split}',${idx})">✕</button></span>`).join('') || '<span class="empty" style="padding:0">Sin ejercicios</span>'}
+          </div>
+          <div class="chip-add">
+            <input id="newExName_${split}" placeholder="Nuevo ejercicio para ${split}">
+            <button class="btn secondary" onclick="addRoutineExercise('${split}')">+ Agregar</button>
+          </div>
+        </div>
+      `).join('')}
+      <div class="chip-add" style="margin-top:12px">
+        <input id="newSplitName" placeholder="Nueva rutina (ej. Hombro)">
+        <button class="btn" style="--accent:${accent}" onclick="addRoutineSplit()">+ Nueva rutina</button>
+      </div>
+    </div>`;
+
+  const volumeSeries = weeklyVolumeSeries();
+  const hasVolume = volumeSeries.some(v=>v>0);
+
+  return `
+    <div class="section-title">Volumen semanal (últimas 8 semanas)</div>
+    <div class="card">
+      ${hasVolume ? sparkline(volumeSeries, accent) : '<div class="empty">Registra sesiones para ver tu tendencia de volumen (kg movidos).</div>'}
+    </div>
+
+    <div class="toolbar" style="margin-top:26px">
+      <div class="section-title" style="margin:0">Rutinas por día</div>
+      <span class="backlink" onclick="toggleRoutineEditor()">${gymEditingRoutines?'ocultar editor':'gestionar rutinas'}</span>
+    </div>
+    ${routineEditor}
+
+    <div class="section-title">Registrar sesión de hoy</div>
+    <div class="card" style="--accent:${accent}">
+      <div class="grid" style="grid-template-columns:1fr 1fr;">
+        <div class="field"><label>Fecha</label><input type="date" id="gymDate" value="${todayStr()}"></div>
+        <div class="field"><label>Día / split</label>
+          <select onchange="loadSplitIntoForm(this.value)">
+            <option value="">— Elegir rutina —</option>
+            ${splitOptions}
+          </select>
+        </div>
+      </div>
+      ${exCards}
+      <button class="btn secondary" onclick="addGymExRow()" style="margin:4px 0 14px">+ Agregar ejercicio suelto</button>
+      <div class="field"><label>Notas</label><textarea id="gymNotes" rows="2" placeholder="Cómo te sentiste, ajustes, etc."></textarea></div>
+      <button class="btn" style="--accent:${accent}" onclick="saveGymEntry()">Guardar sesión</button>
+    </div>
+
+    <div class="section-title">Historial</div>
+    <div class="card">
+      <table>
+        <tr><th>Fecha</th><th>Día</th><th>Ejercicios</th><th>Notas</th><th></th></tr>
+        ${rows || `<tr><td colspan="5" class="empty">Sin sesiones registradas todavía.</td></tr>`}
+      </table>
+    </div>
+
+    ${renderPhotoSection('gym', accent)}
+  `;
+}
+function addGymExRow(){ gymFormExercises.push({name:'',sets:'',reps:'',weight:''}); renderPillar('gym'); }
+function removeGymExRow(i){ gymFormExercises.splice(i,1); renderPillar('gym'); }
+function toggleRoutineEditor(){ gymEditingRoutines = !gymEditingRoutines; renderPillar('gym'); }
+async function addRoutineSplit(){
+  const input = document.getElementById('newSplitName');
+  const name = input.value.trim();
+  if(!name) return;
+  if(!DATA.gymRoutines[name]) DATA.gymRoutines[name] = [];
+  await save();
+  renderPillar('gym');
+}
+async function deleteRoutineSplit(split){
+  if(!confirm(`¿Borrar la rutina "${split}"? Las sesiones ya registradas no se ven afectadas.`)) return;
+  delete DATA.gymRoutines[split];
+  if(gymSelectedSplit===split) gymSelectedSplit='';
+  await save();
+  renderPillar('gym');
+}
+async function addRoutineExercise(split){
+  const input = document.getElementById('newExName_'+split);
+  const name = input.value.trim();
+  if(!name) return;
+  DATA.gymRoutines[split].push({name, sets:3, reps:10, weight:''});
+  await save();
+  renderPillar('gym');
+}
+async function removeRoutineExercise(split, idx){
+  DATA.gymRoutines[split].splice(idx,1);
+  await save();
+  renderPillar('gym');
+}
+async function saveGymEntry(){
+  const date = document.getElementById('gymDate').value || todayStr();
+  const notes = document.getElementById('gymNotes').value;
+  const exercises = gymFormExercises.filter(e=>e.name.trim()!=='');
+  DATA.gym[date] = { split: gymSelectedSplit, exercises, notes };
+  await save();
+  gymFormExercises = [];
+  gymSelectedSplit = '';
+  renderPillar('gym');
+}
+
+/* ============ MATEMÁTICAS ============ */
+function renderMathBody(){
+  const accent = PILLARS.math.accent;
+  const dates = Object.keys(DATA.math).sort().reverse();
+  const rows = dates.map(d=>{
+    const e = DATA.math[d];
+    const acc = e.exercisesSolved ? Math.round((e.exercisesCorrect/e.exercisesSolved)*100) : 0;
+    return `<tr>
+      <td style="font-family:var(--font-mono);white-space:nowrap">${d}</td>
+      <td>${e.topic||'—'}</td>
+      <td>${e.exercisesCorrect||0}/${e.exercisesSolved||0} (${acc}%)</td>
+      <td>${e.minutes||0} min</td>
+      <td>${e.examScore!==''&&e.examScore!=null ? e.examScore+'%' : '—'}</td>
+      <td><button class="btn secondary" onclick="deleteEntry('math','${d}')">Borrar</button></td>
+    </tr>`;
+  }).join('');
+
+  return `
+    <div class="section-title">Registrar sesión</div>
+    <div class="card" style="--accent:${accent}">
+      <div class="grid" style="grid-template-columns:1fr 1fr;">
+        <div class="field"><label>Fecha</label><input type="date" id="mathDate" value="${todayStr()}"></div>
+        <div class="field"><label>Módulo / tema</label><input id="mathTopic" placeholder="Ej. Álgebra — factorización"></div>
+        <div class="field"><label>Ejercicios resueltos</label><input type="number" id="mathSolved"></div>
+        <div class="field"><label>Ejercicios correctos</label><input type="number" id="mathCorrect"></div>
+        <div class="field"><label>Minutos estudiados</label><input type="number" id="mathMinutes"></div>
+        <div class="field"><label>Nota examen de práctica (%, opcional)</label><input type="number" id="mathExam"></div>
+      </div>
+      <div class="field"><label>Notas</label><textarea id="mathNotes" rows="2"></textarea></div>
+      <button class="btn" style="--accent:${accent}" onclick="saveMathEntry()">Guardar sesión</button>
+    </div>
+
+    <div class="section-title">Historial</div>
+    <div class="card">
+      <table>
+        <tr><th>Fecha</th><th>Tema</th><th>Aciertos</th><th>Tiempo</th><th>Examen</th><th></th></tr>
+        ${rows || `<tr><td colspan="6" class="empty">Sin sesiones registradas todavía.</td></tr>`}
+      </table>
+    </div>
+  `;
+}
+async function saveMathEntry(){
+  const date = document.getElementById('mathDate').value || todayStr();
+  DATA.math[date] = {
+    topic: document.getElementById('mathTopic').value,
+    exercisesSolved: Number(document.getElementById('mathSolved').value)||0,
+    exercisesCorrect: Number(document.getElementById('mathCorrect').value)||0,
+    minutes: Number(document.getElementById('mathMinutes').value)||0,
+    examScore: document.getElementById('mathExam').value,
+    notes: document.getElementById('mathNotes').value
+  };
+  await save();
+  renderPillar('math');
+}
+
+/* ============ TOEFL ============ */
+function sparkline(values, color){
+  if(values.length===0) return '';
+  const w=200, h=40, max=Math.max(...values,1), min=Math.min(...values,0);
+  const range = (max-min)||1;
+  const step = w/Math.max(values.length-1,1);
+  const pts = values.map((v,i)=> `${i*step},${h - ((v-min)/range)*h}`).join(' ');
+  return `<svg class="spark" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+function renderToeflBody(){
+  const accent = PILLARS.toefl.accent;
+  const tests = DATA.toefl.tests||[];
+  const sorted = [...tests].sort((a,b)=>a.date.localeCompare(b.date));
+  const rows = [...sorted].reverse().map(t=>`<tr>
+      <td style="font-family:var(--font-mono);white-space:nowrap">${t.date}</td>
+      <td>${t.section}</td>
+      <td>${t.score} / ${t.maxScore}</td>
+      <td>${t.notes||''}</td>
+      <td><button class="btn secondary" onclick="deleteToefl('${t.id}')">Borrar</button></td>
+    </tr>`).join('');
+
+  const scores = sorted.map(t=>Number(t.score));
+
+  return `
+    <div class="section-title">Meta y examen</div>
+    <div class="card" style="--accent:${accent}">
+      <div class="grid" style="grid-template-columns:1fr 1fr;">
+        <div class="field"><label>Puntaje objetivo</label><input type="number" id="toeflTarget" value="${DATA.toefl.settings.target||''}"></div>
+        <div class="field"><label>Fecha de examen</label><input type="date" id="toeflExamDate" value="${DATA.toefl.settings.examDate||''}"></div>
+      </div>
+      <button class="btn secondary" onclick="saveToeflSettings()">Guardar meta</button>
+    </div>
+
+    <div class="section-title">Progreso</div>
+    <div class="card">
+      ${scores.length ? sparkline(scores, accent) : '<div class="empty">Aún no hay practice tests registrados.</div>'}
+    </div>
+
+    <div class="section-title">Registrar practice test</div>
+    <div class="card" style="--accent:${accent}">
+      <div class="grid" style="grid-template-columns:1fr 1fr;">
+        <div class="field"><label>Fecha</label><input type="date" id="toeflDate" value="${todayStr()}"></div>
+        <div class="field"><label>Sección</label>
+          <select id="toeflSection">
+            <option>Examen completo</option>
+            <option>Reading</option>
+            <option>Listening</option>
+            <option>Speaking</option>
+            <option>Writing</option>
+          </select>
+        </div>
+        <div class="field"><label>Score obtenido</label><input type="number" id="toeflScore"></div>
+        <div class="field"><label>Score máximo posible</label><input type="number" id="toeflMax" value="120"></div>
+      </div>
+      <div class="field"><label>Notas</label><textarea id="toeflNotes" rows="2"></textarea></div>
+      <button class="btn" style="--accent:${accent}" onclick="saveToeflEntry()">Guardar</button>
+    </div>
+
+    <div class="section-title">Historial</div>
+    <div class="card">
+      <table>
+        <tr><th>Fecha</th><th>Sección</th><th>Score</th><th>Notas</th><th></th></tr>
+        ${rows || `<tr><td colspan="5" class="empty">Sin registros todavía.</td></tr>`}
+      </table>
+    </div>
+  `;
+}
+async function saveToeflSettings(){
+  DATA.toefl.settings = {
+    target: document.getElementById('toeflTarget').value,
+    examDate: document.getElementById('toeflExamDate').value
+  };
+  await save();
+  renderPillar('toefl');
+}
+async function saveToeflEntry(){
+  DATA.toefl.tests.push({
+    id: uid(),
+    date: document.getElementById('toeflDate').value || todayStr(),
+    section: document.getElementById('toeflSection').value,
+    score: Number(document.getElementById('toeflScore').value)||0,
+    maxScore: Number(document.getElementById('toeflMax').value)||120,
+    notes: document.getElementById('toeflNotes').value
+  });
+  await save();
+  renderPillar('toefl');
+}
+async function deleteToefl(id){
+  DATA.toefl.tests = DATA.toefl.tests.filter(t=>t.id!==id);
+  await save();
+  renderPillar('toefl');
+}
+
+/* ============ CIBERSEGURIDAD ============ */
+function renderCyberBody(){
+  const accent = PILLARS.cyber.accent;
+  const logs = [...(DATA.cyber.logs||[])].sort((a,b)=>b.date.localeCompare(a.date));
+  const rows = logs.map(l=>`<tr>
+      <td style="font-family:var(--font-mono);white-space:nowrap">${l.date}</td>
+      <td>${l.type}</td>
+      <td>${l.topic||''}</td>
+      <td>${l.minutes||0} min</td>
+      <td>${l.score!==''&&l.score!=null ? l.score+'%':'—'}</td>
+      <td>${l.temarioPercent!==''&&l.temarioPercent!=null ? l.temarioPercent+'%':'—'}</td>
+      <td><button class="btn secondary" onclick="deleteCyber('${l.id}')">Borrar</button></td>
+    </tr>`).join('');
+
+  const withPct = [...(DATA.cyber.logs||[])].filter(l=>l.temarioPercent!=='' && l.temarioPercent!=null).sort((a,b)=>a.date.localeCompare(b.date));
+  const currentPct = withPct.length ? withPct[withPct.length-1].temarioPercent : 0;
+
+  return `
+    <div class="section-title">Certificación objetivo</div>
+    <div class="card" style="--accent:${accent}">
+      <div class="grid" style="grid-template-columns:1fr 1fr;">
+        <div class="field"><label>Nombre de la certificación</label><input id="cyberCertName" value="${DATA.cyber.settings.certName||''}" placeholder="Ej. CompTIA Security+"></div>
+        <div class="field"><label>Fecha de examen</label><input type="date" id="cyberExamDate" value="${DATA.cyber.settings.examDate||''}"></div>
+      </div>
+      <button class="btn secondary" onclick="saveCyberSettings()">Guardar</button>
+    </div>
+
+    <div class="stat-row" style="margin-top:16px">
+      <div class="stat-chip" style="--accent:${accent}"><div class="n">${currentPct}%</div><div class="l">Temario cubierto</div></div>
+    </div>
+
+    <div class="section-title">Registrar avance</div>
+    <div class="card" style="--accent:${accent}">
+      <div class="grid" style="grid-template-columns:1fr 1fr;">
+        <div class="field"><label>Fecha</label><input type="date" id="cyberDate" value="${todayStr()}"></div>
+        <div class="field"><label>Tipo</label>
+          <select id="cyberType">
+            <option>Estudio</option>
+            <option>Laboratorio práctico</option>
+            <option>Examen de práctica</option>
+          </select>
+        </div>
+        <div class="field"><label>Tema</label><input id="cyberTopic" placeholder="Ej. Redes — modelo OSI"></div>
+        <div class="field"><label>Minutos</label><input type="number" id="cyberMinutes"></div>
+        <div class="field"><label>Score examen práctica (%, opcional)</label><input type="number" id="cyberScore"></div>
+        <div class="field"><label>% temario cubierto a la fecha (opcional)</label><input type="number" id="cyberPct" value="${currentPct}"></div>
+      </div>
+      <div class="field"><label>Notas / evidencia de laboratorio</label><textarea id="cyberNotes" rows="2"></textarea></div>
+      <button class="btn" style="--accent:${accent}" onclick="saveCyberEntry()">Guardar</button>
+    </div>
+
+    <div class="section-title">Historial</div>
+    <div class="card">
+      <table>
+        <tr><th>Fecha</th><th>Tipo</th><th>Tema</th><th>Tiempo</th><th>Score</th><th>Temario</th><th></th></tr>
+        ${rows || `<tr><td colspan="7" class="empty">Sin registros todavía.</td></tr>`}
+      </table>
+    </div>
+  `;
+}
+async function saveCyberSettings(){
+  DATA.cyber.settings = {
+    certName: document.getElementById('cyberCertName').value,
+    examDate: document.getElementById('cyberExamDate').value
+  };
+  await save();
+  renderPillar('cyber');
+}
+async function saveCyberEntry(){
+  DATA.cyber.logs.push({
+    id: uid(),
+    date: document.getElementById('cyberDate').value || todayStr(),
+    type: document.getElementById('cyberType').value,
+    topic: document.getElementById('cyberTopic').value,
+    minutes: Number(document.getElementById('cyberMinutes').value)||0,
+    score: document.getElementById('cyberScore').value,
+    temarioPercent: document.getElementById('cyberPct').value,
+    notes: document.getElementById('cyberNotes').value
+  });
+  await save();
+  renderPillar('cyber');
+}
+async function deleteCyber(id){
+  DATA.cyber.logs = DATA.cyber.logs.filter(l=>l.id!==id);
+  await save();
+  renderPillar('cyber');
+}
+
+/* ============ INDEPENDENCIA ============ */
+function currentMonthStr(){
+  const d = new Date();
+  return d.getFullYear()+'-'+pad(d.getMonth()+1);
+}
+function renderIndepBody(){
+  const accent = PILLARS.indep.accent;
+  const months = DATA.indep.months||{};
+  const keys = Object.keys(months).sort().reverse();
+  const rows = keys.map(m=>{
+    const e = months[m];
+    return `<tr>
+      <td style="font-family:var(--font-mono);white-space:nowrap">${m}</td>
+      <td>${e.skill||''}</td>
+      <td>${e.mastered?'✅ Dominada':'⏳ En progreso'}</td>
+      <td>${e.notes||''}</td>
+      <td><button class="btn secondary" onclick="deleteIndep('${m}')">Borrar</button></td>
+    </tr>`;
+  }).join('');
+
+  const thisMonth = currentMonthStr();
+  const existing = months[thisMonth] || {skill:'', mastered:false, notes:''};
+
+  return `
+    <div class="section-title">Habilidad del mes (${thisMonth})</div>
+    <div class="card" style="--accent:${accent}">
+      <div class="field"><label>Habilidad</label><input id="indepSkill" value="${existing.skill}" placeholder="Ej. Cocinar 8 platillos base"></div>
+      <label class="check-row" style="--row-accent:${accent};max-width:220px;margin-bottom:10px;">
+        <input type="checkbox" id="indepMastered" ${existing.mastered?'checked':''}>
+        <span class="dotmark"></span>
+        <span>Dominada este mes</span>
+      </label>
+      <div class="field"><label>Notas / evidencia</label><textarea id="indepNotes" rows="2" placeholder="Qué aprendiste, cómo lo comprobaste">${existing.notes}</textarea></div>
+      <button class="btn" style="--accent:${accent}" onclick="saveIndepEntry()">Guardar</button>
+    </div>
+
+    <div class="section-title">Historial</div>
+    <div class="card">
+      <table>
+        <tr><th>Mes</th><th>Habilidad</th><th>Estado</th><th>Notas</th><th></th></tr>
+        ${rows || `<tr><td colspan="5" class="empty">Sin meses registrados todavía.</td></tr>`}
+      </table>
+    </div>
+
+    ${renderPhotoSection('indep', accent)}
+  `;
+}
+async function saveIndepEntry(){
+  const m = currentMonthStr();
+  DATA.indep.months[m] = {
+    skill: document.getElementById('indepSkill').value,
+    mastered: document.getElementById('indepMastered').checked,
+    notes: document.getElementById('indepNotes').value
+  };
+  await save();
+  renderPillar('indep');
+}
+async function deleteIndep(m){
+  delete DATA.indep.months[m];
+  await save();
+  renderPillar('indep');
+}
+
+/* ============ EVIDENCIA FOTOGRÁFICA (gym / indep) ============ */
+let pendingPhoto = { gym:null, indep:null };
+let galleryOpen = { gym:false, indep:false };
+
+function resizeImageFile(file, maxW=1000, quality=0.78){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const scale = Math.min(1, maxW / img.width);
+        const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+async function onPhotoSelected(pillar, input){
+  const file = input.files[0];
+  if(!file) return;
+  try{
+    pendingPhoto[pillar] = await resizeImageFile(file);
+    const preview = document.getElementById(pillar+'PhotoPreview');
+    if(preview) preview.innerHTML = `<img src="${pendingPhoto[pillar]}" style="max-width:120px;border-radius:8px;display:block;margin-top:8px">`;
+  }catch(e){
+    console.error('Error procesando imagen', e);
+  }
+}
+async function savePhotoEntry(pillar){
+  if(!pendingPhoto[pillar]){ alert('Selecciona una foto primero.'); return; }
+  const note = document.getElementById(pillar+'PhotoNote').value;
+  const date = document.getElementById(pillar+'PhotoDate').value || todayStr();
+  try{
+    const res = await fetch('/api/photo', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ pillar, date, note, imageBase64: pendingPhoto[pillar] })
+    });
+    if(!res.ok) throw new Error('upload failed');
+    const record = await res.json();
+    if(!DATA.photos[pillar]) DATA.photos[pillar] = [];
+    DATA.photos[pillar].push(record);
+  }catch(e){
+    alert('No se pudo guardar la foto. ¿Sigue corriendo el servidor local (node server.js)?');
+  }
+  pendingPhoto[pillar] = null;
+  renderPillar(pillar);
+}
+async function deletePhotoEntry(pillar, id){
+  try{
+    await fetch('/api/photo/delete', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({pillar, id}) });
+  }catch(e){ /* seguimos igual y quitamos localmente */ }
+  DATA.photos[pillar] = (DATA.photos[pillar]||[]).filter(p=>p.id!==id);
+  renderPillar(pillar);
+}
+function togglePhotoGallery(pillar){
+  galleryOpen[pillar] = !galleryOpen[pillar];
+  renderPillar(pillar);
+}
+function renderPhotoSection(pillar, accent){
+  const list = (DATA.photos[pillar]||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));
+  const open = galleryOpen[pillar];
+  const preview = pendingPhoto[pillar] ? `<img src="${pendingPhoto[pillar]}" style="max-width:120px;border-radius:8px;display:block;margin-top:8px">` : '';
+  const gallery = !open ? '' : `
+    <div class="photo-grid">
+      ${ list.length ? list.map(p=>`
+        <div class="photo-card">
+          <img src="${p.img}" onclick="window.open(this.src,'_blank')">
+          <div class="photo-meta">
+            <span>${p.date}</span>
+            <button onclick="deletePhotoEntry('${pillar}','${p.id}')">✕</button>
+          </div>
+          ${p.note ? `<div class="photo-note">${p.note}</div>` : ''}
+        </div>
+      `).join('') : '<div class="empty">Aún no hay fotos guardadas.</div>' }
+    </div>`;
+  return `
+    <div class="toolbar" style="margin-top:26px">
+      <div class="section-title" style="margin:0">Evidencia fotográfica</div>
+      <span class="backlink" onclick="togglePhotoGallery('${pillar}')">${open?'ocultar':'ver en orden cronológico'} (${list.length})</span>
+    </div>
+    <div class="card" style="--accent:${accent}">
+      <div class="grid" style="grid-template-columns:1fr 1fr;">
+        <div class="field"><label>Fecha</label><input type="date" id="${pillar}PhotoDate" value="${todayStr()}"></div>
+        <div class="field"><label>Foto</label><input type="file" accept="image/*" onchange="onPhotoSelected('${pillar}', this)"></div>
+      </div>
+      <div class="field"><label>Nota</label><input id="${pillar}PhotoNote" placeholder="Qué muestra esta foto"></div>
+      <div id="${pillar}PhotoPreview">${preview}</div>
+      <button class="btn" style="--accent:${accent};margin-top:10px" onclick="savePhotoEntry('${pillar}')">+ Agregar foto</button>
+    </div>
+    ${gallery}
+  `;
+}
+
+/* ============ SHARED DELETE (gym/math by date) ============ */
+async function deleteEntry(pillar, dateKey){
+  delete DATA[pillar][dateKey];
+  await save();
+  renderPillar(pillar);
+}
+
+/* ============ RESET ============ */
+document.getElementById('resetBtn').addEventListener('click', async ()=>{
+  if(!confirm('¿Borrar todos los datos guardados de la bitácora (incluyendo fotos)? Esta acción no se puede deshacer.')) return;
+  DATA = defaultData();
+  await save();
+  renderAll();
+});
+
+/* ============ INIT ============ */
+(async function init(){
+  document.getElementById('todayChip').textContent = new Date().toLocaleDateString('es-MX', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+  try{
+    await loadFromServer();
+    boot();
+  }catch(e){
+    document.getElementById('view').innerHTML = `<div class="card" style="text-align:center;padding:40px 24px;">
+      <h2 style="font-family:var(--font-display);margin-bottom:8px;">No hay conexión con el servidor local</h2>
+      <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">
+        Este archivo necesita que <code>server.js</code> esté corriendo al lado.<br><br>
+        En una terminal, dentro de la carpeta del proyecto, ejecuta:<br>
+        <code style="color:var(--indep)">node server.js</code><br><br>
+        y abre <code style="color:var(--indep)">http://localhost:4173</code> — no abras este .html con doble clic.
+      </p>
+    </div>`;
+  }
+})();
+</script>
+</body>
+</html>
